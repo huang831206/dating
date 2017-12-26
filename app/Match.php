@@ -13,10 +13,21 @@ class Match extends Model
      * @var array
      */
     protected $guarded = [];
-    
+
 
     public function messages()
     {
         return $this->hasMany('App\Message');
     }
+
+    public function userA()
+    {
+        return $this->belongsTo('App\User', 'user_a_id');
+    }
+
+    public function userB()
+    {
+        return $this->belongsTo('App\User', 'user_b_id');
+    }
+
 }

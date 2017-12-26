@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function matches()
+    {
+        // return $this->hasMany('App\User', 'user_a_id')
+        //             ->concat($this->hasMany('App\User', 'user_b_id'));
+
+        return DB::table('matches')->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
+
+    }
 }
