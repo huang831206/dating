@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Match;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use \Exception;
+
+use App\Repository\MatchRepository;
 
 class MatchController extends Controller
 {
@@ -44,9 +49,22 @@ class MatchController extends Controller
      * @param  \App\Match  $match
      * @return \Illuminate\Http\Response
      */
+    // show the chat page
     public function show(Match $match)
     {
-        //
+        $user = Auth::user();
+        $data = [];
+        if ($user->current_match != $match->id) {   // user is currerntly in the required match
+            // return redirect()->route('home')->with('error', 'You are not authenticated to do this.');
+            abort(404);
+            // abort(403, 'Unauthorized action.');
+        }
+
+        $data['hash'] = $match->hash;
+        $data['created_at'] = $match->created_at;
+        $data['messages'] = $match->messages;
+
+        return view('chat')->with(['data' => $data]);
     }
 
     /**

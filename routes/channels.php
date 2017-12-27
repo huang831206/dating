@@ -14,3 +14,7 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('chat.{hash}', function ($user, $hash) {
+    return ['ok' => App\Repository\MatchRepository::inMatch($user, $hash)];
+});
