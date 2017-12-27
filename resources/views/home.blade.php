@@ -8,9 +8,9 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    @if (session('status'))
+                    @if (session('error'))
                         <div class="alert alert-success">
-                            {{ session('status') }}
+                            {{session('error')}}
                         </div>
                     @endif
 
