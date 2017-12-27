@@ -21,11 +21,13 @@ mix.webpackConfig({
  });
 
 mix.js('resources/assets/js/app.js', 'public/js')
+   .js('resources/assets/js/chat.js', 'public/js')
    .extract([
-        'handlebars',
+		'handlebars',
         'underscore',
         'jquery',
         'axios',
         'vue',
         './resources/assets/semantic/dist/semantic'])
+   .sass('resources/assets/sass/chat.scss', 'public/css')
    .sass('resources/assets/sass/app.scss', 'public/css');
