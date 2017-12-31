@@ -22,9 +22,37 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Match $match)
     {
-        //
+        // AJAX
+        // 1. see if this user is authenticated
+        // 2. is the match ends?
+        // 3. filter the fields that should not be passed( user id, match id(?) )
+
+        $user = Auth::user();
+        $data['success'] = false;
+
+        if ($match->user_a_id != $user->id && $match->user_b_id != $user->id) {
+            // user is neither user_a nor user_b, he is not authenticated to make the request
+            $data['errors']['type'] = 'authentication';
+            $data['errors']['message']= 'you are not authenticated to do this';
+            return response()->json($data);
+        }
+
+        $messages = $match->messages;
+        foreach ($messages as $message) {
+            // this user sent the message
+            $message->from_me = ($user->id == $message->from_user_id);
+            unset($message->id);
+            unset($message->match_id);
+            unset($message->from_user_id);
+            unset($message->to_user_id);
+        }
+        $data['success'] = true;
+        $data['data'] = $messages;
+
+        return $data;
+
     }
 
     /**
