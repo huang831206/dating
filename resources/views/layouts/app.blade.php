@@ -22,7 +22,7 @@
 
         @include('layouts.sidebar')
 
-        <div class="pusher" style="height:100%">
+        <div class="pusher">
             @yield('content')
 
         </div>

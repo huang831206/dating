@@ -1,6 +1,6 @@
-<div class="ui fixed teal inverted menu">
+<div class="ui fixed inverted menu">
 
-    <a class="item" href="{{ url('/home') }}">
+    <a class="item" href="{{ url('/') }}">
         {{-- <img src="http://fakeimg.pl/100/"> --}}
         {{ config('app.name', 'Laravel') }}
     </a>
@@ -19,10 +19,17 @@
             <a class="item" href="{{ route('login') }}"><div class="ui button">Log-in</div></a>
         @else
 
+            @if (Auth::user()->current_match)
+            <a class="item" href="{{ route('chat', ['match' => Auth::user()->current_match]) }}">
+                <i class="circular red inverted talk icon"></i>
+            </a>
+            @endif
+
             {{-- user information --}}
             <div class="ui inline dropdown item">
                 <div class="text">
-                    <img class="ui avatar image" src="http://fakeimg.pl/50/">
+                    {{-- <img class="ui avatar image" src="http://fakeimg.pl/50/"> --}}
+                    <i class="user icon"></i>
                     {{ Auth::user()->name }}
                 </div>
                 <i class="dropdown icon"></i>
