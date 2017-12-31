@@ -18,12 +18,16 @@ class UsersTableSeeder extends Seeder
             'email' => 'huang831206@gmail.com',
             'name'=>'admin',
             'password'=>Hash::make('123456'),
+            'is_profile_complete' => 1,
+            'current_match' => 1
         ]);
 
         App\User::create([
             'email' => 't@gmail.com',
             'name'=>'tester',
             'password'=>Hash::make('123456'),
+            'is_profile_complete' => 1,
+            'current_match' => 1
         ]);
 
         App\User::create([

@@ -36,4 +36,10 @@ class User extends Authenticatable
         return DB::table('matches')->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
 
     }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
+
 }
