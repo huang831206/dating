@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Exception;
 
+use App\Events\MatchEnded;
+
 use App\Repository\MatchRepository;
+use App\Repository\UserRepository;
 
 class MatchController extends Controller
 {
@@ -19,7 +22,11 @@ class MatchController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $data['success'] = true;
+        $data['data'] = UserRepository::getUserMatches($user->id);
+
+        return response()->json($data);
     }
 
     /**
@@ -52,9 +59,10 @@ class MatchController extends Controller
     // show the chat page
     public function show(Match $match)
     {
+        // TODO:maybe this should serve for list match messages
         $user = Auth::user();
         $data = [];
-        if ($user->current_match != $match->id) {   // user is currerntly in the required match
+        if ($user->current_match != $match->hash) {   // user is currerntly in the required match
             // return redirect()->route('home')->with('error', 'You are not authenticated to do this.');
             abort(404);
             // abort(403, 'Unauthorized action.');
@@ -98,6 +106,8 @@ class MatchController extends Controller
      */
     public function destroy(Match $match)
     {
-        //
+        MatchRepository::endMatch($match);
+
+        broadcast(new MatchEnded($match->hash))->toOthers();
     }
 }
