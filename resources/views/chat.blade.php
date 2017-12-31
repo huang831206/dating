@@ -8,12 +8,24 @@
     .chat-message {
         /*overflow: auto;*/
     }
+
+    .pusher {
+        height: 100%;
+        background: url('http://dating.my/images/ring-blur2.jpg') #103d50 !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    #app {
+        margin-top: 47px !important;
+    }
+
 </style>
 @endsection
 @section('content')
 
-<div id="scroll-content" class="ui container" style="height:80%; overflow-x: hidden; overflow-y: auto;">
-    <div class="ui segment">
+<div id="scroll-content" class="ui container" style="height:79%; overflow-x: hidden; overflow-y: auto;">
+    <div class="ui borderless segment" style="background:0;">
         <div class="ui middle aligned list chat-messages">
 
 

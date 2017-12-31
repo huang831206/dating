@@ -43,16 +43,22 @@ window.Echo.join('chat.' + hash)
         $('.chat-messages').append(html);
         // when new message comes, scroll content to bottom
         toBottom();
+    })
+    .listen('MatchEnded', function (event) {
+        console.log('he/she ended the chat');
+        console.log(event);
+        // disableChat();
     });
 
 $(document).ready(function () {
     // CSR messages
+    toBottom();
 });
 
 $('#sendMessage').click(function () {
     var message = $('#textBox').val().trim();
     if(message){
-        axios.post('/newChatMessage',{
+        axios.post('/message/new',{
             hash: hash,
             message: message
         })
