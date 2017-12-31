@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+{{-- TODO:import min required assest only --}}
     <!-- Styles -->
     <style>
         .hidden.menu {
@@ -85,7 +85,7 @@
             display: none;
         }
 
-        .headerDimmer {
+        .header-dimmer {
             padding-top: 1em;
             background-color: rgba(0,0,0,0.5);
         }
@@ -113,16 +113,50 @@
                 font-size: 1.5em;
             }
         }
+
+        .landing {
+            background: url('{{asset('images/love4.jpeg')}}') #103d50 70% 30% no-repeat !important;
+            background-size: cover !important;
+        }
+
+        .ladning-dimmer {
+            width: 100%;
+            min-height: inherit;
+            z-index:  10;
+            background-color: rgba(0,0,0,0.3);
+        }
+
     </style>
+    <script src="{{ asset('/js/manifest.js') }}"></script>
+    <script src="{{ asset('/js/vendor.js') }}"></script>
+    <script src="{{ asset('js/landing.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // fix menu when passed
+            $('.masthead').visibility({
+                once: false,
+                onBottomPassed: function() {
+                    $('.fixed.menu').transition('fade in');
+                },
+                onBottomPassedReverse: function() {
+                    $('.fixed.menu').transition('fade out');
+                }
+            });
+
+            // create sidebar and attach to menu open
+            $('.ui.sidebar').sidebar('attach events', '.toc.item');
+            $('.ui.dropdown').dropdown();
+        });
+    </script>
 </head>
 
 <body class="pushable">
-
+{{-- TODO:change menus --}}
     <!-- Following Menu -->
-    <div class="ui large top fixed menu transition hidden">
+    <div class="ui inverted large top fixed menu transition hidden">
         <div class="ui container">
-            <a class="active item">Home</a>
-            <a class="item">Work</a>
+            <a class="active item" href="/">Home</a>
+            <a class="item">About</a>
             <a class="item">Company</a>
             <a class="item">Careers</a>
             <div class="right menu">
@@ -138,8 +172,8 @@
 
     <!-- Sidebar Menu -->
     <div class="ui vertical inverted sidebar menu left" style="">
-        <a class="active item">Home</a>
-        <a class="item">Work</a>
+        <a class="active item" href="/">Home</a>
+        <a class="item">About</a>
         <a class="item">Company</a>
         <a class="item">Careers</a>
         <a class="item">Login</a>
@@ -150,32 +184,60 @@
     <!-- Page Contents -->
     <div class="pusher">
         <div class="ui landing vertical masthead center aligned segment" style="background-color: #8e6f6f;">
-
-            <div class="headerDimmer">
-                <div class="ui container">
-                    <div class="ui large secondary inverted pointing menu"  style="border-width:0">
-                        <a class="toc item">
-                            <i class="sidebar icon"></i>
-                        </a>
-                        <a class="active item">Home</a>
-                        <a class="item">Work</a>
-                        <a class="item">Company</a>
-                        <a class="item">Careers</a>
-                        <div class="right item">
-                            <a class="ui inverted button">Log in</a>
-                            <a class="ui inverted button">Sign Up</a>
+            <div class="ladning-dimmer">
+                <div class="header-dimmer">
+                    <div class="ui container">
+                        <div class="ui large secondary inverted pointing menu"  style="border-width:0">
+                            <a class="toc item">
+                                <i class="sidebar icon"></i>
+                            </a>
+                            <a class="active item" href="/">Home</a>
+                            <a class="item">Work</a>
+                            <a class="item">Company</a>
+                            <a class="item">Careers</a>
+                            <div class="right item">
+                                @auth
+                                    {{-- <a class="ui inverted button" href="{{ url('/home') }}">Settings</a> --}}
+                                    <div class="ui inline dropdown item">
+                                        <div class="text">
+                                            <img class="ui avatar image" src="http://fakeimg.pl/50/">
+                                            {{ Auth::user()->name }}
+                                        </div>
+                                        <i class="dropdown icon"></i>
+                                        <div class="menu">
+                                            {{-- logout button --}}
+                                            <div class="item">
+                                                <a href="{{ route('home') }}" style="color: #000000;">Dashboard</a>
+                                            </div>
+                                            <div class="item">
+                                                <a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                                style="color: #000000;">
+                                                    Logout
+                                                </a>
+                                            </div>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                @else
+                                    <a class="ui inverted button" href="{{ route('login') }}">Login</a>
+                                    <a class="ui inverted blue button" href="{{ route('register') }}">Register</a>
+                                @endauth
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- center text --}}
-            <div class="ui text container">
-                <h1 class="ui inverted header">
-                        Imagine-a-Company
-                    </h1>
-                <h2>Do whatever you want when you want to.</h2>
-                <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+                {{-- center text --}}
+                <div class="ui text container">
+                    <h1 class="ui inverted header">
+                            Find Your Soulmate
+                        </h1>
+                    <h2>Do whatever you want when you want to.</h2>
+                    <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+                </div>
             </div>
 
         </div>
@@ -190,7 +252,7 @@
                         <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
                     </div>
                     <div class="six wide right floated column">
-                        <img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
+                        <img src="{{asset('images/love.jpeg')}}" class="ui large bordered rounded image">
                     </div>
                 </div>
                 <div class="row">
@@ -215,6 +277,45 @@
                             <img src="assets/images/avatar/nan.jpg" class="ui avatar image"> <b>Nan</b> Chief Fun Officer Acme Toys
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui inverted vertical stripe segment">
+            <h4 class="ui horizontal divider header">
+                <i class="users icon"></i>
+                Team
+            </h4>
+            <div class="ui five column center aligned stackable grid container">
+                <div class="column">
+                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
+                    <h1 class="ui header">Heading</h1>
+                    <p>lorem ipsum</p>
+                    <div class="ui basic button">View details »</div>
+                </div>
+                <div class="column">
+                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
+                    <h1 class="ui header">Heading</h1>
+                    <p>lorem ipsum</p>
+                    <div class="ui basic button">View details »</div>
+                </div>
+                <div class="column">
+                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
+                    <h1 class="ui header">Heading</h1>
+                    <p>lorem ipsum</p>
+                    <div class="ui basic button">View details »</div>
+                </div>
+                <div class="column">
+                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
+                    <h1 class="ui header">Heading</h1>
+                    <p>lorem ipsum</p>
+                    <div class="ui basic button">View details »</div>
+                </div>
+                <div class="column">
+                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
+                    <h1 class="ui header">Heading</h1>
+                    <p>lorem ipsum</p>
+                    <div class="ui basic button">View details »</div>
                 </div>
             </div>
         </div>
@@ -271,31 +372,6 @@
         <div data-reactroot=""></div>
     </div>
 
-    {{--
-    <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a> @else
-            <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('register') }}">Register</a> @endauth
-        </div>
-        @endif
-
-        <div class="content">
-            <div class="title m-b-md">
-                Laravel
-            </div>
-
-            <div class="links">
-                <a href="https://laravel.com/docs">Documentation</a>
-                <a href="https://laracasts.com">Laracasts</a>
-                <a href="https://laravel-news.com">News</a>
-                <a href="https://forge.laravel.com">Forge</a>
-                <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div>
-        </div>
-    </div> --}}
 </body>
 
 </html>
