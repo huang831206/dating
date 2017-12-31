@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome2');
 });
 Route::get('/2', function () {
     return view('welcome2');
@@ -22,12 +22,22 @@ Auth::routes();
 
 // Route::middleware(['auth'])->group(function () {
 
+    Route::get('/user/profile', 'UserController@profile');
+    Route::post('/user/profile', 'UserController@editProfile');
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     // route model binding by hash. {match} : stands for the hash
-    Route::get('/chat/{match}', 'MatchController@show');
+    Route::get('/chat/{match}', 'MatchController@show')->name('chat');
 
-    Route::post('/newChatMessage', 'MessageController@store');
+    Route::post('/message/new', 'MessageController@store');
 
+    // AJAX load matches
+    Route::get('/match/all', 'MatchController@index');
+
+    // AJAX, after click on a match
+    Route::get('/match/{match}/messages', 'MessageController@index');
+
+    Route::post('/match/{match}/rate', 'MatchController@update');
 
 // });
