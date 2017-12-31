@@ -24,9 +24,10 @@ class MatchRepository
 
     public static function inMatch(User $user, $hash) {
         // see if the user bbelongs to the match having the hash
-        $ab = DB::table('matches')->select('user_a_id','user_b_id')->where('hash', $hash)->get()->all();
-        return !empty($ab) && ($ab[0]->user_a_id == $user->id || $ab[0]->user_b_id == $user->id);
+        // $ab = DB::table('matches')->select('user_a_id','user_b_id')->where('hash', $hash)->get()->all();
+        // return !empty($ab) && ($ab[0]->user_a_id == $user->id || $ab[0]->user_b_id == $user->id);
 
+        return ($user->current_match == $hash);
     }
 
     public static function makeNewMatch(User $user_a, User $user_b) {
@@ -37,7 +38,26 @@ class MatchRepository
         // calculate hash by match id, which will never overlap
         $match->hash = self::hashMatch($match->id);
         $match->save();
+
+        // update these two user's current_match
+        UserRepository::setCurrentMatchHash($user_a, $match->hash);
+        UserRepository::setCurrentMatchHash($user_b, $match->hash);
+
         return $match;
+    }
+
+    // set hash to null
+    public function endMatchByHash($hash)
+    {
+        DB::table('users')->where('current_match', $hash)->update(['current_match'=>null]);
+    }
+
+    public function endMatch(Match $match)
+    {
+        $match->userA->current_match = null;
+        $match->userA->save();
+        $match->userB->current_match = null;
+        $match->userB->save();
     }
 
     public static function hashMatch($match_id) {
