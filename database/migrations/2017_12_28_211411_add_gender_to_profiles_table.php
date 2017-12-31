@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddBirthdayAndProfileCompleteToUsersTable extends Migration
+class AddGenderToProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddBirthdayAndProfileCompleteToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_profile_complete')->default(0);
+        Schema::table('profiles', function (Blueprint $table) {
+            // the id of the ongoing match
+            $table->string('gender')->nullable();
         });
     }
 

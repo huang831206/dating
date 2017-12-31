@@ -18,8 +18,8 @@ class CreateMatchesTable extends Migration
             $table->integer('user_a_id');
             $table->integer('user_b_id');
             $table->string('hash')->nullable();
-            $table->integer('rating_a')->unsigned()->nullable();
-            $table->integer('rating_b')->unsigned()->nullable();
+            $table->integer('rating_a')->unsigned()->nullable();    // b rate a
+            $table->integer('rating_b')->unsigned()->nullable();    // a rate b
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCurrentMatchToUsersTable extends Migration
+class AddIsProfileCompleteToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddCurrentMatchToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // the hash of the ongoing match
-            $table->string('current_match')->nullable();
+            $table->boolean('is_profile_complete')->default(0);
         });
     }
 
