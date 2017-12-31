@@ -7,6 +7,9 @@ window._ = require('underscore');
  * code may be modified to fit the specific needs of your application.
  */
 
+// include moment js
+window.moment = require('moment');
+
 //include handlebars js
 window.Handlebars = require('handlebars');
 
@@ -18,6 +21,8 @@ try {
 
 require('./../semantic/dist/semantic');
 
+// include sweetalert2
+window.swal = require('sweetalert2')
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
