@@ -11,7 +11,7 @@
 
     .pusher {
         height: 100%;
-        background: url('http://dating.my/images/ring-blur2.jpg') #103d50 !important;
+        background: url("{{asset('images/ring-blur2.jpg')}}") #103d50 !important;
         background-size: cover !important;
         background-position: center !important;
     }
