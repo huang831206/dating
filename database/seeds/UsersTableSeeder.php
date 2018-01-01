@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'name'=>'admin',
             'password'=>Hash::make('123456'),
             'is_profile_complete' => 1,
-            'current_match' => 1
+            'current_match' => '12345'
         ]);
 
         App\User::create([
@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             'name'=>'tester',
             'password'=>Hash::make('123456'),
             'is_profile_complete' => 1,
-            'current_match' => 1
+            'current_match' => '12345'
         ]);
 
         App\User::create([
