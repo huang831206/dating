@@ -185,16 +185,21 @@ axios.get('/match/all')
             // generate current matches data
             var source  = document.getElementById("match-card-template").innerHTML;
             var html = Handlebars.compile(source)(data);
-            $('.ui.three.special.cards').append(html);
+            $('#match-record-tab .ui.three.special.cards').append(html);
 
             // setup semantic ui
             $('.special.cards .image').dimmer({
                 on: 'hover'
             });
 
-            $('.ui.rating').rating({
+            $('.ui.rating.other-rating').rating({
+                initialRating: 4,
                 maxRating: 5
             }).rating('disable');
+
+            $('.ui.rating.my-rating').rating({
+                maxRating: 5
+            }).rating();
 
             // show modal for chat history
             $('.detail-history-btn').click(function () {
@@ -215,7 +220,7 @@ axios.get('/match/all')
                 .modal('setting', 'transition', 'vertical flip')
                 .modal('show');
 
-                // get messages nad render
+                // get messages and render
                 axios.get('/match/' + hash + '/messages')
                     .then(function (response) {
                         if(response.data.success){
@@ -247,6 +252,29 @@ axios.get('/match/all')
             location.href = '/home';
         }
 
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+axios.get('/invitation/list')
+    .then(function (response) {
+        if(response.data.success){
+            var data = _.map(response.data.data, function (record) {
+                record.data = JSON.parse(record.data);
+                return record;
+            });
+            console.log(data);
+            var cardsHTML = '';
+            if (_.isEmpty(data)) {
+                html = 'You havn\'t accept any invitations yet.!!';
+            } else {
+                var source  = document.getElementById("invitation-card-template").innerHTML;
+                var html = Handlebars.compile(source)(data);
+                cardsHTML += html;
+            }
+            $('#dating-record-tab .ui.one.special.cards').append(cardsHTML);
+        }
     })
     .catch(function (error) {
         console.log(error);

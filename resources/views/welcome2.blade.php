@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>論友</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -146,6 +146,9 @@
             // create sidebar and attach to menu open
             $('.ui.sidebar').sidebar('attach events', '.toc.item');
             $('.ui.dropdown').dropdown();
+            $('#main-go').click(function () {
+                location.href = '/register';
+            })
         });
     </script>
 </head>
@@ -235,8 +238,8 @@
                     <h1 class="ui inverted header">
                             Find Your Soulmate
                         </h1>
-                    <h2>Do whatever you want when you want to.</h2>
-                    <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+                    <h2 style="color:white;">讓學術之路不再孤單.</h2>
+                    <div id="main-go" class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
                 </div>
             </div>
 

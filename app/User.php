@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function matches()
+    public function scopeMatches()
     {
         // return $this->hasMany('App\User', 'user_a_id')
         //             ->concat($this->hasMany('App\User', 'user_b_id'));

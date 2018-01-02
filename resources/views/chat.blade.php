@@ -20,6 +20,14 @@
         margin-top: 47px !important;
     }
 
+    #invitation-date .ui.loader:before{
+        border-color: #adacac7a;
+    }
+
+    #invitation-date .ui.loader:after{
+        border-color: #4a4747 transparent transparent;
+    }
+
 </style>
 @endsection
 @section('content')
@@ -48,6 +56,25 @@
                     </div>
                 </div>
             @endforelse
+            {{-- <div class="item">
+                <div class="content message ui large olive" style="max-width:100%">
+                    請確認是否參加2018/1/3 18:00，在 台灣桃園市中壢區環西路二段正老林羊肉爐 的聚會？
+                    你們的推薦論文為：
+                    <ul>
+                        <li>一個具有聲音支援的情感導向式資訊視覺化系統</li>
+                        <li>應用於程式行為分析之彈性資訊流追蹤技術</li>
+                        <li>探討腦波資訊回饋對民眾求籤態度的影響</li>
+                    </ul>
+                    <div class="actions" style="margin-top:1em">
+                        <div class="ui negative button">No</div>
+                        <div class="ui positive right labeled icon button approve-invitation-btn" data-id=30>
+                            Yes
+                            <i class="checkmark icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div> --}}
 {{--
             <div class="item">
                 <div class="right floated content message ui large olive my-message">
@@ -111,14 +138,14 @@
 
 </div>
 <div class="ui bottom attached centered grid chat-box" style=" margin-top: 0;">
-    <div class="centered row teal inverted">
+    <div class="centered row inverted" style="background-color:#a4b8d078">
         <div class="middle aligned column">
-            <button class="circular ui icon button">
-            <i class="add square icon"></i>
+            <button class="circular ui icon button" id="new-invitation-btn">
+                <i class="calendar large icon"></i>
             </button>
         </div>
         <div class="twelve wide column">
-            <div class="ui fluid action input olive inverted segment">
+            <div class="ui fluid action input inverted segment" style="background-color:#deb94f;">
                 <input id="textBox" type="text" placeholder="Go...">
                 <div class="ui button" id="sendMessage">Go</div>
             </div>
@@ -142,12 +169,15 @@
 
 @include('partials/_my-message')
 @include('partials/_other-message')
+@include('partials/_invitation-modal')
+@include('partials/_invitation-message')
 
 @endsection
 
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUj6U1I3CrgjudAY3-i6E9C0TH0aIOEdg&libraries=places"></script>
 <script src="{{asset('js/chat.js')}}"></script>
 
 @endsection

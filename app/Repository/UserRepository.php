@@ -43,9 +43,17 @@ class UserRepository
         return $matches;
     }
 
-    public function setCurrentMatchHash(User $user, $hash)
+    public static function getUserApprovedInvitations($user)
     {
-        $user->hash = $hash;
+        return DB::table('invitations')->where('approved', true)
+                                ->where('from_user_id', $user->id)
+                                ->orWhere('to_user_id', $user->id)
+                                ->get();
+    }
+
+    public static function setCurrentMatchHash(User $user, $hash)
+    {
+        $user->current_match = $hash;
         $user->save();
     }
 }

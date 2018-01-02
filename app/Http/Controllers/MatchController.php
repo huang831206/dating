@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Match;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,15 @@ class MatchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $user_a = User::find($request->user_a_id);
+        $user_b = User::find($request->user_b_id);
+
+        $match = MatchRepository::makeNewMatch($user_a, $user_b);
+
+        $data['success'] = true;
+        $data['hash'] = $match->hash;
+        return response()->json($data);
     }
 
     /**

@@ -15,7 +15,8 @@ mix.webpackConfig({
  	resolve: {
  		alias: {
  			jquery: "jquery/src/jquery",
-            handlebars: 'handlebars/dist/handlebars.min.js'
+            handlebars: 'handlebars/dist/handlebars.min.js',
+            calendar: 'semantic-ui-calendar/dist/calendar.min.js'
  		}
  	}
  });
@@ -24,6 +25,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/chat.js', 'public/js')
    .js('resources/assets/js/landing.js', 'public/js')
    .js('resources/assets/js/home.js', 'public/js')
+   .js('resources/assets/js/pair.js', 'public/js')
    .extract([
 		'handlebars',
         'underscore',

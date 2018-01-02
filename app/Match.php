@@ -20,6 +20,11 @@ class Match extends Model
         return $this->hasMany('App\Message');
     }
 
+    public function invitations()
+    {
+        return $this->hasMany('App\Invitation');
+    }
+
     public function userA()
     {
         return $this->belongsTo('App\User', 'user_a_id');

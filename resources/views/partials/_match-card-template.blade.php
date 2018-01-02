@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            <img src="http://fakeimg.pl/300/" data-gender="@{{other_profile.gender}}">
+            <img src="/images/@{{other_profile.gender}}.png" data-gender="@{{other_profile.gender}}">
         </div>
 
         <div class="content">
@@ -23,11 +23,11 @@
         </div>
         <div class="extra">
             你給他:
-            <div class="ui star rating" data-rating="@{{i_rate}}"></div>
+            <div class="ui star rating my-rating" data-rating="@{{i_rate}}"></div>
         </div>
         <div class="extra">
             他給你:
-            <div class="ui star rating" data-rating="@{{me_rated}}"></div>
+            <div class="ui star rating other-rating" data-rating="@{{me_rated}}"></div>
         </div>
     </div>
     @{{/each}}

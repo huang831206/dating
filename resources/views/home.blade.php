@@ -82,9 +82,12 @@
                     <div class="ui teal left pointing label">&nbsp;</div>
                 </a>
                 <a class="item" data-tab="second">配對紀錄
-                    <div class="ui label">51</div>
+                    <div class="ui label">{{ count(Auth::user()->matches()) }}</div>
                 </a>
-                <a class="item" data-tab="third">VIP
+                <a class="item" data-tab="third">行程管理
+                    <div class="ui label">&nbsp;&nbsp;&nbsp;</div>
+                </a>
+                <a class="item" data-tab="fourth">VIP
                     <div class="ui label">no</div>
                 </a>
             </div>
@@ -233,7 +236,7 @@
 
             <div class="ui stackable container">
                 <div class="ui three special cards">
-                    <div class="card match-card" data-hash="">
+                    {{-- <div class="card match-card" data-hash="">
                         <div class="blurring dimmable image">
                             <div class="ui dimmer">
                                 <div class="content">
@@ -258,14 +261,49 @@
                             Rating:
                             <div class="ui star rating" data-rating="4"></div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
         </div>
 
         {{-- Third tab --}}
-        <div class="eight wide column tab-content" data-tab="third" style="display:none;">
+        <div id="dating-record-tab" class="eight wide column tab-content" data-tab="third" style="display:none;">
+            <div class="ui grid stackable container">
+                <div class="ten wide column">
+                    <h1>{{ Auth::user()->name }}</h1>
+                </div>
+                <div class="six wide column">
+
+                </div>
+            </div>
+
+            <div class="ui section divider"></div>
+
+            <div class="ui stackable container">
+                <h2>已答應的邀約</h2>
+                <div class="ui one special cards">
+                    {{-- <div class="ui card" data-hash="@{{hash}}">
+                        <div class="content">
+                            <div class="header">123</div>
+                            <div class="meta">
+                                <span>Your last conversation</span>
+                            </div>
+                            <div class="description">
+                                <ul>
+                                    <li>1</li>
+                                    <li>1</li>
+                                    <li>1</li>
+                                <ul>
+                            </div>
+                        </div>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+
+        {{-- Fourth tab --}}
+        <div class="eight wide column tab-content" data-tab="fourth" style="display:none;">
             <div class="ui grid stackable container">
                 <div class="ten wide column">
                     <h1></h1>
@@ -289,6 +327,7 @@
 @include('partials/_chat-history-modal')
 @include('partials/_my-message')
 @include('partials/_other-message')
+@include('partials/_invitation-card-template')
 
 @endsection
 

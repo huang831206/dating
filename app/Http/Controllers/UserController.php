@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,5 +76,12 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-
+    public function pair(Request $request)
+    {
+        if (Auth::user()->current_match) {
+            return redirect()->route('home');;
+        } else {
+            return view('pair');
+        }
+    }
 }

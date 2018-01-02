@@ -1,6 +1,11 @@
 {
     "/js/vendor.js": "/js/vendor.js",
     "/js/app.js": "/js/app.js",
+    "/css/chat.css": "/css/chat.css",
     "/css/app.css": "/css/app.css",
+    "/js/landing.js": "/js/landing.js",
+    "/js/chat.js": "/js/chat.js",
+    "/js/pair.js": "/js/pair.js",
+    "/js/home.js": "/js/home.js",
     "/js/manifest.js": "/js/manifest.js"
 }

@@ -17,10 +17,15 @@ Route::get('/', function () {
 Route::get('/2', function () {
     return view('welcome2');
 });
+Route::get('/t', function () {
+    return 'teeeee';
+});
 
 Auth::routes();
 
 // Route::middleware(['auth'])->group(function () {
+
+    Route::get('/pair', 'UserController@pair');
 
     Route::get('/user/profile', 'UserController@profile');
     Route::post('/user/profile', 'UserController@editProfile');
@@ -31,9 +36,14 @@ Auth::routes();
     Route::get('/chat/{match}', 'MatchController@show')->name('chat');
 
     Route::post('/message/new', 'MessageController@store');
+    Route::post('/invitation/new', 'InvitationController@store');
+    Route::post('/invitation/calculate', 'InvitationController@calculate');
+    Route::post('/invitation/approve', 'InvitationController@approve');
+    Route::get('/invitation/list', 'InvitationController@index');
 
     // AJAX load matches
     Route::get('/match/all', 'MatchController@index');
+    Route::post('/match/create', 'MatchController@store');
 
     // AJAX, after click on a match
     Route::get('/match/{match}/messages', 'MessageController@index');
