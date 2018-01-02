@@ -23,7 +23,7 @@ Route::get('/t', function () {
 
 Auth::routes();
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/pair', 'UserController@pair');
 
@@ -50,4 +50,4 @@ Auth::routes();
 
     Route::post('/match/{match}/rate', 'MatchController@update');
 
-// });
+});
