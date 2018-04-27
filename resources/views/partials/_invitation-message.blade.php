@@ -21,7 +21,7 @@
                 @{{/each}}
             </ul>
             <div class="actions" style="margin-top:1em">
-                <div class="ui negative button">No</div>
+                <div class="ui negative button deny-invitation-btn">No</div>
                 <div class="ui positive right labeled icon button approve-invitation-btn" data-id="@{{id}}">
                     Yes
                     <i class="checkmark icon"></i>

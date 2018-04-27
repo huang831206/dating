@@ -87,6 +87,15 @@ class InvitationController extends Controller
                 return response()->json($data);
             }
 
+            // $area_ch = DB::table('research_area')
+            //                 ->where('id', $user->profile->research_area_id)
+            //                 ->select('area')->first()->area;
+            // $keyWord = preg_split('/(?<!^)(?!$)/u', $area_ch)[0];
+            // $papers = DB::table('papers')->where('name_ch','like','%'.$keyWord.'%')
+            //                              ->select('id', 'name_ch')
+            //                              ->inRandomOrder()
+            //                              ->limit(5)->get()->all();
+
             $papers = DB::table('papers')->select('id', 'name_ch')
                                          ->inRandomOrder()
                                          ->limit(5)->get()->all();
@@ -170,7 +179,18 @@ class InvitationController extends Controller
      */
     public function destroy(Invitation $invitation)
     {
-        //
+        $data['success'] = false;
+        try {
+            $data['gg'] = $invitation;
+            $invitation->delete();
+            $data['success'] = true;
+        } catch (Exception $e) {
+            $data['errors']['type'] = 'error';
+            $data['errors']['message'] = $e->getTrace();
+            return response()->json($data);
+        }
+
+        return response()->json($data);
     }
 
     // calculate recommendation
@@ -226,7 +246,7 @@ class InvitationController extends Controller
                               ->whereBetween('lng', [$lng-0.005, $lng+0.005])
                               ->get();
 
-            $scores['traffic'] = 50 + count($sites)?:0 *10;
+            $scores['traffic'] = 50 + (count($sites)?:0) *10;
 
 
 

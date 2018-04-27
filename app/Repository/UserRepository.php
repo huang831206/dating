@@ -17,6 +17,7 @@ class UserRepository
                     // ->select('hash', 'rating_a', 'rating_b', 'created_at', 'updated_at')
                     ->where('user_a_id', $user_id)
                     ->orWhere('user_b_id', $user_id)
+                    ->orderBy('created_at', 'desc')
                     ->get();
 
         foreach ($matches as $match) {
@@ -26,7 +27,7 @@ class UserRepository
                 $match->other_profile = User::find($match->user_b_id)->profile;
             } else {                                // user is b
                 $match->me_rated = $match->rating_b;
-                $match->i_rate = $match->rating_b;
+                $match->i_rate = $match->rating_a;
                 $match->other_profile = User::find($match->user_a_id)->profile;
             }
             unset($match->id);
@@ -45,10 +46,10 @@ class UserRepository
 
     public static function getUserApprovedInvitations($user)
     {
-        return DB::table('invitations')->where('approved', true)
-                                ->where('from_user_id', $user->id)
+        $result = DB::table('invitations')->where('from_user_id', $user->id)
                                 ->orWhere('to_user_id', $user->id)
                                 ->get();
+        return $result->where('approved', true)->where('deleted_at', null);
     }
 
     public static function setCurrentMatchHash(User $user, $hash)

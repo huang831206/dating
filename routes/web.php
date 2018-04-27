@@ -25,7 +25,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/pair', 'UserController@pair');
+    Route::get('/pair', 'UserController@pair')->name('pair');
 
     Route::get('/user/profile', 'UserController@profile');
     Route::post('/user/profile', 'UserController@editProfile');
@@ -40,10 +40,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/invitation/calculate', 'InvitationController@calculate');
     Route::post('/invitation/approve', 'InvitationController@approve');
     Route::get('/invitation/list', 'InvitationController@index');
+    Route::get('/invitation/{invitation}/destroy', 'InvitationController@destroy');
 
     // AJAX load matches
     Route::get('/match/all', 'MatchController@index');
     Route::post('/match/create', 'MatchController@store');
+    Route::post('/match/{match}/destroy', 'MatchController@destroy');
 
     // AJAX, after click on a match
     Route::get('/match/{match}/messages', 'MessageController@index');

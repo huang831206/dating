@@ -60,13 +60,21 @@ window.Echo.join('chat.' + hash)
     .listen('MatchEnded', function (event) {
         console.log('he/she ended the chat');
         console.log(event);
-        // disableChat();
+        disableChat();
     });
 
 $(document).ready(function () {
     // CSR messages
     toBottom();
 });
+
+$('.sidebar')
+    .sidebar({
+        context: $('#app')
+    })
+    .sidebar('attach events', '#info-profile')
+    .sidebar('setting', 'transition', 'overlay')
+    .sidebar('setting', 'dimPage', false);
 
 $('#sendMessage').click(function () {
     var message = $('#textBox').val().trim();
@@ -158,7 +166,8 @@ $('.invitation.modal').modal({
 })
 .modal('setting', 'transition', 'vertical flip');
 
-$('.approve-invitation-btn').click(function () {
+$(document).on('click', '.approve-invitation-btn', function () {
+    console.log('attempt to approve');
     var id = $(this).data('id');
 
     var msgBlock = $(this).parent().parent().parent();
@@ -181,9 +190,24 @@ $('.approve-invitation-btn').click(function () {
     });
 });
 
+$(document).on('click', '.deny-invitation-btn', function () {
+    $(this).parent().parent().parent().remove();
+});
+
 
 $('#new-invitation-btn').click(function () {
     $('.invitation.modal').modal('show');
+});
+
+$('#end-btn').click(function () {
+    axios.post('/match/' + hash + '/destroy', {})
+        .then(function (response) {
+            console.log(response);
+            disableChat();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 });
 
 var papers;
@@ -285,6 +309,28 @@ autocomplete.addListener('place_changed', function () {
         document.getElementById('location').placeholder = 'Enter a city';
     }
 });
+
+function displayInvitation(event) {
+    var data = JSON.parse(event.invitation.data);
+    data.from_me = false;
+    data.id = event.invitation.id;
+    console.log(data);
+    var source  = document.getElementById("invitation-message-template").innerHTML;
+    var html = Handlebars.compile(source)(data);
+    console.log(html);
+    $('.chat-messages').append(html);
+    toBottom();
+}
+
+function disableChat() {
+    swal(
+        '您已離開對話!',
+        '失去的緣分不再重來...',
+        'warning'
+    ).then(function (result) {
+        location.href = '/home';
+    });
+}
 
 function iTalk(message) {
     var source  = document.getElementById("my-message-template").innerHTML;

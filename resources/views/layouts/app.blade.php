@@ -20,7 +20,7 @@
 
     <div id="app" class="ui bottom attached pushable" style='margin-top:60px;'>
 
-        @include('layouts.sidebar')
+        @yield('sidebar')
 
         <div class="pusher">
             @yield('content')

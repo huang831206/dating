@@ -126,6 +126,10 @@
             background-color: rgba(0,0,0,0.3);
         }
 
+        .name-lbl {
+            color: white !important;
+        }
+
     </style>
     <script src="{{ asset('/js/manifest.js') }}"></script>
     <script src="{{ asset('/js/vendor.js') }}"></script>
@@ -147,7 +151,7 @@
             $('.ui.sidebar').sidebar('attach events', '.toc.item');
             $('.ui.dropdown').dropdown();
             $('#main-go').click(function () {
-                location.href = '/register';
+                location.href = '/pair';
             })
         });
     </script>
@@ -209,9 +213,7 @@
                                         <i class="dropdown icon"></i>
                                         <div class="menu">
                                             {{-- logout button --}}
-                                            <div class="item">
-                                                <a href="{{ route('home') }}" style="color: #000000;">Dashboard</a>
-                                            </div>
+                                            <a class="item" href="{{ route('home') }}" style="color: #000000;">Dashboard</a>
                                             <div class="item">
                                                 <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -249,8 +251,8 @@
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
                     <div class="eight wide column">
-                        <h3 class="ui header">We Help Companies and Companions</h3>
-                        <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
+                        <h3 class="ui header">We Help Single Boys and Girls</h3>
+                        <p>Find someone to talk to. If you're lucky enough, maybe you will have a nice dage!</p>
                         <h3 class="ui header">We Make Bananas That Can Dance</h3>
                         <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
                     </div>
@@ -275,9 +277,9 @@
                         <p>That is what they all say about us</p>
                     </div>
                     <div class="column">
-                        <h3>"I shouldn't have gone with their competitor."</h3>
+                        <h3>"That's exactly what I need!"</h3>
                         <p>
-                            <img src="assets/images/avatar/nan.jpg" class="ui avatar image"> <b>Nan</b> Chief Fun Officer Acme Toys
+                            <img src="{{asset('images/avatar-small.jpg')}}" class="ui avatar image"> <b>Ben</b> nerd
                         </p>
                     </div>
                 </div>
@@ -291,33 +293,33 @@
             </h4>
             <div class="ui five column center aligned stackable grid container">
                 <div class="column">
-                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
-                    <h1 class="ui header">Heading</h1>
-                    <p>lorem ipsum</p>
+                    <img class="ui centered small circular image" src="{{asset('images/1.jpg')}}">
+                    <h1 class="ui header name-lbl">黃琮閔</h1>
+                    <p></p>
                     <div class="ui basic button">View details »</div>
                 </div>
                 <div class="column">
-                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
-                    <h1 class="ui header">Heading</h1>
-                    <p>lorem ipsum</p>
+                    <img class="ui centered small circular image" src="{{asset('images/2.jpg')}}">
+                    <h1 class="ui header name-lbl">顏子明</h1>
+                    <p></p>
                     <div class="ui basic button">View details »</div>
                 </div>
                 <div class="column">
-                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
-                    <h1 class="ui header">Heading</h1>
-                    <p>lorem ipsum</p>
+                    <img class="ui centered small circular image" src="{{asset('images/3.jpg')}}">
+                    <h1 class="ui header name-lbl">曾博彥</h1>
+                    <p></p>
                     <div class="ui basic button">View details »</div>
                 </div>
                 <div class="column">
-                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
-                    <h1 class="ui header">Heading</h1>
-                    <p>lorem ipsum</p>
+                    <img class="ui centered small circular image" src="{{asset('images/4.jpg')}}">
+                    <h1 class="ui header name-lbl">謝映蓉</h1>
+                    <p></p>
                     <div class="ui basic button">View details »</div>
                 </div>
                 <div class="column">
-                    <img class="ui centered small circular image" src="http://fakeimg.pl/500/">
-                    <h1 class="ui header">Heading</h1>
-                    <p>lorem ipsum</p>
+                    <img class="ui centered small circular image" src="{{asset('images/5.jpg')}}">
+                    <h1 class="ui header name-lbl">鍾幸軒</h1>
+                    <p></p>
                     <div class="ui basic button">View details »</div>
                 </div>
             </div>

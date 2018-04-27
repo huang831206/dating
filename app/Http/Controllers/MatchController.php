@@ -25,7 +25,14 @@ class MatchController extends Controller
     {
         $user = Auth::user();
         $data['success'] = true;
-        $data['data'] = UserRepository::getUserMatches($user->id);
+        $matches = UserRepository::getUserMatches($user->id);
+
+        // remove current match
+        if($user->current_match){
+            $matches->pop();
+        }
+
+        $data['data'] = $matches;
 
         return response()->json($data);
     }
@@ -48,7 +55,7 @@ class MatchController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $user_a = User::find($request->user_a_id);
         $user_b = User::find($request->user_b_id);
 
@@ -81,6 +88,8 @@ class MatchController extends Controller
         $data['created_at'] = $match->created_at;
         $data['messages'] = $match->messages;
 
+        $data['other_profile'] = MatchRepository::getMatcherProfile($match, $user);
+
         return view('chat')->with(['data' => $data]);
     }
 
@@ -104,7 +113,23 @@ class MatchController extends Controller
      */
     public function update(Request $request, Match $match)
     {
-        //
+        $data['success'] = false;
+        try {
+            $user = Auth::user();
+            if ($user->id == $match->user_a_id) {
+                $match->rating_b = $request->rating;
+            } else {
+                $match->rating_a = $request->rating;
+            }
+            $match->save();
+            $data['success'] = true;
+        } catch (Exception $e) {
+            $data['errors']['type'] = 'error';
+            $data['errors']['message'] = $e->getTrace();
+            return response()->json($data);
+        }
+
+        return response()->json($data);
     }
 
     /**

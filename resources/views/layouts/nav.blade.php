@@ -23,6 +23,8 @@
             <a class="item" href="{{ route('chat', ['match' => Auth::user()->current_match]) }}">
                 <i class="circular red inverted talk icon"></i>
             </a>
+            @else
+            <a class="item" href="{{ route('pair') }}"><div class="ui green button">開始配對</div></a>
             @endif
 
             {{-- user information --}}
@@ -34,10 +36,11 @@
                 </div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
+                    <a class="item" href="{{ route('home') }}" style="color: #000000;">Dashboard</a>
                     {{-- logout button --}}
-                    <div class="item">
+                    <div class="item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        {{-- onclick="event.preventDefault(); document.getElementById('logout-form').submit();" --}}
                         style="color: #000000;">
                             Logout
                         </a>

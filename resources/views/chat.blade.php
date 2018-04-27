@@ -30,12 +30,47 @@
 
 </style>
 @endsection
-@section('content')
 
+@section('sidebar')
+    <div class="ui top sidebar segment">
+        <div class="ui center aligned page grid">
+            <div class="one column row">
+                <div class="sixteen wide column">
+                    <h2 class="ui header">關於對方</h2>
+                </div>
+            </div>
+            <div class="five column divided row">
+                <div class="column">
+                    性別<br>
+                    <img  class="ui wireframe image" src="{{asset('images/'. $data['other_profile']->gender .'.png')}}">
+                    {{$data['other_profile']->gender}}
+                </div>
+                <div class="column">
+                    來自於<br><br><br>
+                    {{$data['other_profile']->city}}
+                </div>
+                <div class="column">
+                    研究領域<br><br><br>
+                    {{$data['other_profile']->area}}
+                </div>
+                <div class="column">
+                    興趣<br><br><br>
+                    {{$data['other_profile']->hobby}}
+                </div>
+                <div class="column">
+                    自我介紹<br><br><br>
+                    {{$data['other_profile']->introduction}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('content')
 <div id="scroll-content" class="ui container" style="height:79%; overflow-x: hidden; overflow-y: auto;">
     <div class="ui borderless segment" style="background:0;">
         <div class="ui middle aligned list chat-messages">
-
 
             @forelse ($data['messages'] as $message)
                 <div class="item">
@@ -140,7 +175,17 @@
 <div class="ui bottom attached centered grid chat-box" style=" margin-top: 0;">
     <div class="centered row inverted" style="background-color:#a4b8d078">
         <div class="middle aligned column">
-            <button class="circular ui icon button" id="new-invitation-btn">
+            <button class="circular ui icon green inverted button" id="info-profile" data-tooltip="對方資料">
+                <i class="info large icon"></i>
+            </button>
+        </div>
+        <div class="middle aligned column">
+            <button class="circular ui icon red inverted button" id="end-btn" data-tooltip="結束對話">
+                <i class="remove large icon"></i>
+            </button>
+        </div>
+        <div class="middle aligned column" >
+            <button class="circular ui icon button" id="new-invitation-btn" data-tooltip="發送邀請">
                 <i class="calendar large icon"></i>
             </button>
         </div>

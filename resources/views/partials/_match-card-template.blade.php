@@ -23,11 +23,11 @@
         </div>
         <div class="extra">
             你給他:
-            <div class="ui star rating my-rating" data-rating="@{{i_rate}}"></div>
+            <div class="ui star rating my-rating" data-rating="@{{i_rate}}" data-max-rating="5"></div>
         </div>
         <div class="extra">
             他給你:
-            <div class="ui star rating other-rating" data-rating="@{{me_rated}}"></div>
+            <div class="ui star rating other-rating" data-rating="@{{me_rated}}" data-max-rating="5"></div>
         </div>
     </div>
     @{{/each}}

@@ -63,6 +63,7 @@ class UserController extends Controller
             $user->is_profile_complete = true;
             $user->save();
         } else {
+            $user->profile->gender = $request->gender;
             $user->profile->hobby = $request->hobby;
             $user->profile->research_area_id = $request->area;
             $user->profile->location_id = $request->location;
@@ -78,7 +79,8 @@ class UserController extends Controller
 
     public function pair(Request $request)
     {
-        if (Auth::user()->current_match) {
+        $user = Auth::user();
+        if ($user->current_match && $user->is_profile_complete) {
             return redirect()->route('home');;
         } else {
             return view('pair');

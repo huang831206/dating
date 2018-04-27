@@ -161,6 +161,26 @@ $('.side-menu .item').click(function () {
     resetProfileDefault();
 });
 
+$(document).on('click', '.remove-invitation-btn', function () {
+    var card = $(this).parent().parent().parent();
+    var id = card.data('id');
+    console.log(id);
+    axios.get('/invitation/' + id + '/destroy')
+        .then(function (response) {
+            console.log(response);
+            if (response.data.success) {
+                swal(
+                    'You\'ve deleted that.',
+                    'success'
+                );
+                card.remove();
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+});
+
 
 // get profile data and render
 axios.get('/user/profile')
@@ -192,14 +212,36 @@ axios.get('/match/all')
                 on: 'hover'
             });
 
-            $('.ui.rating.other-rating').rating({
-                initialRating: 4,
-                maxRating: 5
-            }).rating('disable');
+            // $('.ui.rating.other-rating').rating({
+            //     initialRating: 4,
+            //     maxRating: 5
+            // }).rating('disable');
+            $('.ui.rating.other-rating').rating('disable');
 
+            // $('.ui.rating.my-rating').rating({
+            //     maxRating: 5
+            // }).rating();
             $('.ui.rating.my-rating').rating({
-                maxRating: 5
-            }).rating();
+                onRate: function (score) {
+                    var hash  = $(this).parent().parent().data('hash');
+                    console.log(score);
+                    console.log(hash);
+                    axios.post('/match/' + hash +'/rate', {
+                            rating: score
+                        }).then(function (response) {
+                            console.log(response);
+                            if (response.data.success) {
+                                swal(
+                                    'Thanks for yor rating.',
+                                    'success'
+                                );
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            });
 
             // show modal for chat history
             $('.detail-history-btn').click(function () {

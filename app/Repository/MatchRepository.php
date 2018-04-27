@@ -47,12 +47,12 @@ class MatchRepository
     }
 
     // set hash to null
-    public function endMatchByHash($hash)
+    public static function endMatchByHash($hash)
     {
         DB::table('users')->where('current_match', $hash)->update(['current_match'=>null]);
     }
 
-    public function endMatch(Match $match)
+    public static function endMatch(Match $match)
     {
         $match->userA->current_match = null;
         $match->userA->save();
@@ -62,5 +62,17 @@ class MatchRepository
 
     public static function hashMatch($match_id) {
         return md5($match_id);
+    }
+
+    public static function getMatcherProfile(Match $match, User $user) {
+        $matcherId = self::matcher($match, $user);
+
+        $profile = DB::table('profiles')->where('user_id', $matcherId)
+                             ->join('location', 'profiles.location_id', '=', 'location.id')
+                             ->join('research_area', 'profiles.research_area_id', '=', 'research_area.id')
+                             ->select('hobby', 'introduction', 'gender', 'city', 'area')
+                             ->get()->first();
+
+        return $profile;
     }
 }
